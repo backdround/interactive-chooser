@@ -1,6 +1,6 @@
-import QtQml 2.13
 import QtQuick 2.13
-import QtQuick.Controls  2.13
+import QtQuick.Controls 2.13
+import QtQuick.Layouts 1.13
 import QtQuick.Window 2.13
 
 Window {
@@ -9,7 +9,7 @@ Window {
   visible: true
   color: "transparent"
 
-  width: 0.8 * screen.width
+  width: 0.4 * screen.width
   height: 0.7 * screen.height
   x: screen.virtualX + 0.5 * screen.width - 0.5 * width
   y: screen.virtualY + 0.1 * screen.height
@@ -20,7 +20,7 @@ Window {
     border.color: "#99CED6"
     border.width: 2
     width: 0
-    height: 30
+    height: 20
 
     states: [
       State {
@@ -35,9 +35,8 @@ Window {
         SequentialAnimation {
           NumberAnimation {
             property: "width"; easing.type: Easing.InOutQuad
-            duration: 400;
+            duration: 500;
           }
-          ScriptAction  { script: { header.state = "init"; } }
           NumberAnimation {
             property: "height"; easing.type: Easing.InOutQuad
             duration: 300;
@@ -49,75 +48,30 @@ Window {
     Component.onCompleted: {
       onTriggered: background.state = "init"
     }
-  }
 
-  Rectangle {
-    id: main_container
-    anchors.margins: 30
-    visible: true
-    color: "transparent"
-    width: main_window.width
-    height: main_window.height
+    ColumnLayout {
+      anchors.fill: parent
+      anchors.margins: 40
+      spacing: 40
 
-    Rectangle {
-      id: header
-      color: "#999C9EB0"
-      radius: 5
-      border.color: "#99CED6"
-      border.width: 4
-      anchors.top: parent.top
-      anchors.left: parent.left
-      height: 0
-      width: parent.width
+      Rectangle {
+        id: header
+        color: "#999C9EB0"
+        radius: 5
+        border.color: "#99CED6"
+        border.width: 4
+        Layout.fillWidth: true
+        Layout.minimumHeight: 0
+        Layout.preferredHeight: parent.height / 20
+      }
 
-      states: [
-        State {
-          name: "init"
-          PropertyChanges { target: header; height: 100 }
-        }
-      ]
-
-      transitions: [
-        Transition {
-          to: "init"
-          SequentialAnimation {
-            NumberAnimation  {
-              property: "height"; easing.type: Easing.InCubic
-              duration: 60;
-            }
-            ScriptAction  { script: { main.state = "init"; } }
-          }
-        }
-      ]
-    }
-
-    Rectangle {
-      id: main
-      color: "#CCFAF0AA"
-      radius: 5
-      anchors.top: header.bottom
-      anchors.horizontalCenter: header.horizontalCenter
-      height: 0
-      width: 6 * header.width / 7
-
-      states: [
-        State {
-          name: "init"
-          PropertyChanges { target: main; height: parent.height - header.height }
-        }
-      ]
-
-      transitions: [
-        Transition {
-          to: "init"
-          SequentialAnimation {
-            NumberAnimation  {
-              property: "height"; easing.type: Easing.OutCubic
-              duration: 250;
-            }
-          }
-        }
-      ]
+      Rectangle {
+        id: main
+        color: "#CCFAF0AA"
+        radius: 5
+        Layout.fillWidth: true
+        Layout.fillHeight: true
+      }
     }
   }
 }
