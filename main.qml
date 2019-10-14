@@ -9,13 +9,16 @@ Window {
   visible: true
   color: "transparent"
 
-  width: 0.42 * screen.width
-  height: 0.85 * screen.height
-  x: screen.virtualX + 0.5 * screen.width - 0.5 * width
-  y: screen.virtualY + 0.5 * screen.height - 0.5 * height
+  property var focused_geometry: focused_screen.geometry
+
+  width: 0.42 * focused_geometry.width
+  height: 0.85 * focused_geometry.height
+  x: focused_geometry.x + 0.5 * focused_geometry.width - 0.5 * width
+  y: focused_geometry.y + 0.5 * focused_geometry.height - 0.5 * height
 
   Rectangle {
     id: background
+    objectName: "background"
     color: "#AA444444"
     border.color: "#99CED6"
     border.width: 2
@@ -46,7 +49,7 @@ Window {
     ]
 
     Component.onCompleted: {
-      onTriggered: background.state = "init"
+      background.state = "init"
     }
 
     ColumnLayout {
