@@ -105,6 +105,12 @@ void X11_notifier::active_desktop_changed() {
         {monitor.x, monitor.y, monitor.width, monitor.height});
 }
 
+QRect X11_notifier::get_current_screen() {
+    update_desktop();
+    auto& monitor = monitors[current_monitor_index];
+    return {monitor.x, monitor.y, monitor.width, monitor.height};
+}
+
 void X11_notifier::update_monitors() {
     auto get_monitors_cookie = xcb_randr_get_monitors(xcb, root, true);
     auto get_monitors_reply =

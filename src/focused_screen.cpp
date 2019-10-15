@@ -7,6 +7,7 @@
 Focused_screen::Focused_screen() {
     connect(X11_notifier::get(), &X11_notifier::current_screen_changed, this,
             [this](const QRect& screen_rect) { set_geometry(screen_rect); });
+    set_geometry(X11_notifier::get()->get_current_screen());
 }
 
 QRect Focused_screen::geometry() {

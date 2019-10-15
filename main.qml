@@ -5,16 +5,14 @@ import QtQuick.Window 2.13
 
 Window {
   id: main_window
-  flags: Qt.Window | Qt.Dialog | Qt.FramelessWindowHint
-  visible: true
+  flags: Qt.FramelessWindowHint | Qt.X11BypassWindowManagerHint | Qt.WindowTransparentForInput
   color: "transparent"
 
-  property var focused_geometry: focused_screen.geometry
-
-  width: 0.42 * focused_geometry.width
-  height: 0.85 * focused_geometry.height
-  x: focused_geometry.x + 0.5 * focused_geometry.width - 0.5 * width
-  y: focused_geometry.y + 0.5 * focused_geometry.height - 0.5 * height
+  onVisibleChanged: {
+    if (visible) {
+      background.state = "init"
+    }
+  }
 
   Rectangle {
     id: background
@@ -47,10 +45,6 @@ Window {
         }
       }
     ]
-
-    Component.onCompleted: {
-      background.state = "init"
-    }
 
     ColumnLayout {
       anchors.fill: parent

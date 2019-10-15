@@ -39,6 +39,7 @@ public:
     static X11_notifier* get();
 
     void output();
+    QRect get_current_screen();
 
 signals:
     void current_screen_changed(const QRect& screen);
