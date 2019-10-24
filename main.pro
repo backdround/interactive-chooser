@@ -1,8 +1,14 @@
 TEMPALTE = app
 QT += core gui widgets qml quick quickwidgets
 CONFIG += debug c++17
-SOURCES += src/main.cpp src/focused_screen.cpp src/x11_notifier.cpp
-HEADERS += src/focused_screen.h src/x11_notifier.h
+
+SOURCES += $$files(src/*.cpp) \
+  $$files(src/x11/*.cpp)
+HEADERS += $$files(src/*.h) \
+  $$files(src/x11/*.h)
+
+INCLUDEPATH *= src/x11/
+
 RESOURCES += resources.qrc
 LIBS += -lxcb -lxcb-ewmh -lxcb-randr
 

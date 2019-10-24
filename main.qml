@@ -5,7 +5,8 @@ import QtQuick.Window 2.13
 
 Window {
   id: main_window
-  flags: Qt.FramelessWindowHint | Qt.X11BypassWindowManagerHint | Qt.WindowTransparentForInput
+  //flags: Qt.FramelessWindowHint | Qt.X11BypassWindowManagerHint | Qt.WindowTransparentForInput
+  flags: Qt.FramelessWindowHint | Qt.Dialog
   color: "transparent"
 
   onVisibleChanged: {
@@ -34,7 +35,8 @@ Window {
       Transition {
         to: "init"
         SequentialAnimation {
-          NumberAnimation {
+          //NumberAnimation {
+          SmoothedAnimation {
             property: "width"; easing.type: Easing.InOutQuad
             duration: 300;
           }

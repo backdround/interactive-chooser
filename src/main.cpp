@@ -1,4 +1,5 @@
 #include <QGuiApplication>
+#include <QTimer>
 #include <QDebug>
 #include <QObject>
 #include <QRect>
@@ -10,6 +11,7 @@
 
 #include "focused_screen.h"
 #include "x11_notifier.h"
+
 
 void update_widget_geometry(QQuickWindow* widget, const QRect& screen_geometry) {
     auto new_width = screen_geometry.width() / 2;
@@ -38,6 +40,8 @@ int main(int argc, char* argv[]) {
 
 
     auto window = qobject_cast<QQuickWindow*>(object);
+    //connect(window, &QQuickWindow::cl)
+
     Focused_screen focused_screen;
     QObject::connect(&focused_screen, &Focused_screen::geometry_changed,
                      [&window](const QRect& screen_geometry) {

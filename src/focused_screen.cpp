@@ -5,9 +5,10 @@
 #include "x11_notifier.h"
 
 Focused_screen::Focused_screen() {
-    connect(X11_notifier::get(), &X11_notifier::current_screen_changed, this,
+    connect(X11_notifier::get_instance(), &X11_notifier::current_monitor_changed,
+            this,
             [this](const QRect& screen_rect) { set_geometry(screen_rect); });
-    set_geometry(X11_notifier::get()->get_current_screen());
+    set_geometry(X11_notifier::get_instance()->get_current_monitor_geometry());
 }
 
 QRect Focused_screen::geometry() {
