@@ -5,8 +5,7 @@ import QtQuick.Window 2.13
 
 Window {
   id: main_window
-  //flags: Qt.FramelessWindowHint | Qt.X11BypassWindowManagerHint | Qt.WindowTransparentForInput
-  flags: Qt.FramelessWindowHint | Qt.Dialog
+  flags: Qt.FramelessWindowHint | Qt.X11BypassWindowManagerHint | Qt.WindowTransparentForInput
   color: "transparent"
 
   onVisibleChanged: {

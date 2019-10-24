@@ -11,4 +11,3 @@ INCLUDEPATH *= src/x11/
 
 RESOURCES += resources.qrc
 LIBS += -lxcb -lxcb-ewmh -lxcb-randr
-
