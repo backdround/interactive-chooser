@@ -1,4 +1,3 @@
-#include <QApplication>
 #include <QThread>
 
 #include "window_placer.h"
