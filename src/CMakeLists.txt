@@ -18,12 +18,14 @@ header_directories(DIRECTORIES)
 # Find dependencies
 find_package(Qt5 COMPONENTS Core Quick REQUIRED)
 find_package(XCB COMPONENTS XCB RANDR EWMH REQUIRED)
+find_package(Threads REQUIRED)
 
 
 # Create main library
 add_library(main_lib STATIC ${SOURCES} ${HEADERS})
 target_include_directories(main_lib PUBLIC ${DIRECTORIES})
-target_link_libraries(main_lib Qt5::Core Qt5::Quick XCB::XCB XCB::RANDR XCB::EWMH)
+target_link_libraries(main_lib Qt5::Core Qt5::Quick XCB::XCB XCB::RANDR
+  XCB::EWMH Threads::Threads)
 
 
 # Create binary

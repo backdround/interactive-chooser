@@ -1,5 +1,8 @@
 #pragma once
 #include <QWindow>
+#include <QObject>
+
+#include "x11_notifier.h"
 
 class Window_placer : public QObject {
     Q_OBJECT
@@ -12,4 +15,5 @@ private slots:
 
 private:
     QWindow* managed_window_;
+    X11_notifier notifier_;
 };

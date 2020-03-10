@@ -1,20 +1,8 @@
 #include <QDebug>
-#include <QCoreApplication>
-#include <QTimer>
 
-#include "x11_event_loop.h"
+#include <cstring>
 
 #include "x11_notifier.h"
-
-X11_notifier* X11_notifier::get_instance() {
-    if (!instance) {
-        instance = new X11_notifier();
-        qAddPostRoutine([] {
-            delete instance;
-        });
-    }
-    return instance;
-}
 
 X11_notifier::X11_notifier() {
     // Init xcb.
@@ -41,22 +29,18 @@ X11_notifier::X11_notifier() {
     get_monitors_info();
     update_desktop();
 
+    // Delegate event handling.
+    auto desktop_changed_checker = [this](const xcb_generic_event_t* event) {
+        QMetaObject::invokeMethod(this, "event_handler", Qt::DirectConnection,
+                                  Q_ARG(const xcb_generic_event_t*, event));
+    };
+
     // Init x11 event loop.
-    loop = new X11_event_loop(xcb, screen);
-    connect(loop, &X11_event_loop::active_desktop_changed, this,
-            &X11_notifier::update_current_monitor);
-    loop->moveToThread(&loop_thread);
-    connect(&loop_thread, &QThread::started, loop, &X11_event_loop::run);
-    loop_thread.start();
+    loop_ = new X11_event_loop(xcb, screen, desktop_changed_checker);
 }
 
 X11_notifier::~X11_notifier() {
-    instance = nullptr;
-
-    // Stop thread.
-    loop->stop();
-    loop_thread.quit();
-    loop_thread.wait();
+    delete loop_;
 
     // Realize resources.
     xcb_ewmh_connection_wipe(ewmh);
@@ -64,14 +48,31 @@ X11_notifier::~X11_notifier() {
     xcb_disconnect(xcb);
 }
 
+void X11_notifier::event_handler(const xcb_generic_event_t* event) {
+    if (event->response_type != XCB_PROPERTY_NOTIFY) {
+        return;
+    }
 
-void X11_notifier::update_current_monitor() {
+    // Get atom name.
+    auto property_event =
+        reinterpret_cast<const xcb_property_notify_event_t*>(event);
+    auto name_cookie = xcb_get_atom_name(xcb, property_event->atom);
+    auto name_reply =
+        xcb_get_atom_name_reply(xcb, name_cookie, nullptr);
+    auto atom_name = xcb_get_atom_name_name(name_reply);
+
+    // Compare with desktop changed atom name.
+    auto desktop_changed_atom_name = "_NET_CURRENT_DESKTOP";
+    if (memcmp(atom_name, desktop_changed_atom_name,
+               name_reply->name_len) != 0) {
+        return;
+    }
+
     update_desktop();
     emit current_monitor_changed(current_monitor);
 }
 
-QRect X11_notifier::get_current_monitor_geometry() {
-    update_desktop();
+QRect X11_notifier::current_monitor_geometry() {
     return current_monitor;
 }
 

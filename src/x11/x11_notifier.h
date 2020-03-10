@@ -1,34 +1,30 @@
 #pragma once
 #include <QObject>
 #include <QRect>
-#include <QThread>
 
 #include <xcb/randr.h>
 #include <xcb/xcb_ewmh.h>
 
 #include <vector>
 
-class X11_event_loop;
+#include "x11_event_loop.h"
 
 class X11_notifier : public QObject {
     Q_OBJECT
-public:
-    static X11_notifier* get_instance();
 
-    QRect get_current_monitor_geometry();
+public:
+    X11_notifier();
+    ~X11_notifier();
+
+    QRect current_monitor_geometry();
 
 signals:
     void current_monitor_changed(const QRect& screen);
 
 private slots:
-    void update_current_monitor();
+    void event_handler(const xcb_generic_event_t* event);
 
 private:
-    // Singleton
-    X11_notifier();
-    ~X11_notifier();
-    inline static X11_notifier* instance = nullptr;
-
     // Monitors
     void get_monitors_info();
     void update_desktop();
@@ -43,6 +39,5 @@ private:
     xcb_ewmh_connection_t* ewmh;
 
     // X11 loop
-    X11_event_loop* loop;
-    QThread loop_thread;
+    X11_event_loop* loop_ = nullptr;
 };
