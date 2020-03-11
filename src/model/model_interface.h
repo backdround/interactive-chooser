@@ -7,7 +7,7 @@ class Model_interface : public QObject{
     Q_OBJECT
 
 public:
-    virtual void user_input_changed(std::string input);
+    virtual void user_input_changed(std::string input) {};
 
     virtual std::size_t size() = 0;
 
@@ -18,6 +18,6 @@ public:
     virtual std::string description(std::size_t i) { return {}; };
 
 signals:
-    void item_inserted(std::size_t i);
-    void item_erased(std::size_t i);
+    void item_inserted(std::size_t index);
+    void item_erased(std::size_t index);
 };

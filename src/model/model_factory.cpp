@@ -1,4 +1,4 @@
-#include "stub_model.h".h"
+#include "stub_model.h"
 
 #include "model_factory.h"
 
