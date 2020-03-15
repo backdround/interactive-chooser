@@ -1,5 +1,6 @@
 #pragma once
 #include <QObject>
+#include <QVariant>
 #include <QAbstractListModel>
 
 #include <vector>
@@ -7,6 +8,7 @@
 #include "model_interface.h"
 
 class Viewmodel : public QAbstractListModel {
+    Q_OBJECT
 public:
     Viewmodel(Model_interface& model);
 
@@ -19,6 +21,8 @@ public:
         WEIGHT,
         DESCRIPTION,
     };
+
+    Q_INVOKABLE void action(QVariant index);
 
 private slots:
     void item_inserted(std::size_t index);

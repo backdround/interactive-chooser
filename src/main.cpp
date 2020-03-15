@@ -1,9 +1,9 @@
 #include <QGuiApplication>
+#include <QDebug>
 #include <QObject>
 
 #include <QQmlEngine>
 
-#include <iostream>
 
 #include "window_placer.h"
 #include "model_factory.h"
@@ -16,7 +16,7 @@ int main(int argc, char* argv[]) {
     auto model = factory.create();
 
     if (!model) {
-        std::cout << "Couldn't create model" << std::endl;
+        qCritical() << "Couldn't create model";
         exit(-1);
     }
 
@@ -26,7 +26,7 @@ int main(int argc, char* argv[]) {
     auto window = main_window.quick_window();
 
     if (!window) {
-        std::cout << "Couldn't create window" << std::endl;
+        qCritical() << "Couldn't create window";
         exit(-1);
     }
 

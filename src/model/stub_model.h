@@ -14,6 +14,8 @@ public:
     std::string name(std::size_t i) override;
     int weight(std::size_t i) override;
 
+    void action(std::size_t i) override;
+
 private:
     std::vector<std::string> items_;
 };

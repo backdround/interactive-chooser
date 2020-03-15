@@ -1,5 +1,8 @@
 #include "stub_model.h"
 
+#include <iostream>
+using namespace std;
+
 Stub_model::Stub_model() {
     items_.push_back("one");
     items_.push_back("two");
@@ -21,4 +24,8 @@ std::string Stub_model::name(std::size_t i) {
 
 int Stub_model::weight(std::size_t i) {
     return 1;
+}
+
+void Stub_model::action(std::size_t i) {
+    cout << "action index: " << i << endl;
 }

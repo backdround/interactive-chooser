@@ -1,3 +1,5 @@
+#include <QDebug>
+
 #include "viewmodel.h"
 
 Viewmodel::Viewmodel(Model_interface& model) : model_(model) {
@@ -46,6 +48,14 @@ QVariant Viewmodel::data(const QModelIndex& model_index, int role) const {
         default:
             return {};
     }
+}
+
+void Viewmodel::action(QVariant index) {
+    if (!index.canConvert<std::size_t>()) {
+        qWarning() << "Couldn't convert action index to size_t";
+    }
+    auto i = index.value<std::size_t>();
+    model_.action(i);
 }
 
 

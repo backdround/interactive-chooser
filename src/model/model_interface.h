@@ -14,6 +14,8 @@ public:
     virtual std::string name(std::size_t i) = 0;
     virtual int weight(std::size_t i) = 0;
 
+    virtual void action(std::size_t i) = 0;
+
     virtual bool use_description() { return false; };
     virtual std::string description(std::size_t i) { return {}; };
 
