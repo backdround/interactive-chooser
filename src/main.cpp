@@ -1,27 +1,35 @@
 #include <QGuiApplication>
+#include <QDebug>
 #include <QObject>
 
 #include <QQmlEngine>
-#include <QQuickWindow>
-#include <QQmlComponent>
+
 
 #include "window_placer.h"
+#include "model_factory.h"
+#include "main_window.h"
 
 int main(int argc, char* argv[]) {
     QGuiApplication app(argc, argv);
 
-    QQmlEngine engine;
-    QQmlComponent component(&engine, ":/main.qml");
-    auto object = component.create();
+    Model_factory factory(argc, argv);
+    auto model = factory.create();
 
-    if (!object) {
-        qCritical() << "Failed to create main component:";
-        qCritical() << component.errors();
-        return -1;
+    if (!model) {
+        qCritical() << "Couldn't create model";
+        exit(-1);
     }
-    object->setParent(&component);
 
-    auto window = qobject_cast<QQuickWindow*>(object);
+    QQmlEngine engine;
+
+    Main_window main_window(engine, *model);
+    auto window = main_window.quick_window();
+
+    if (!window) {
+        qCritical() << "Couldn't create window";
+        exit(-1);
+    }
+
     Window_placer placer(window);
     window->show();
 
