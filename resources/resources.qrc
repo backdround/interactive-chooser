@@ -1,6 +1,21 @@
 <!DOCTYPE RCC>
 <RCC version="1.0">
 <qresource>
+
+  <!-- Main -->
   <file alias="main_window.qml">../src/main_window/main_window.qml</file>
+  <file>Chooser.qml</file>
+  <file>List.qml</file>
+
+  <!-- Input -->
+  <file alias="Input.qml">input/Input.qml</file>
+  <file alias="Input_field.qml">input/Input_field.qml</file>
+  <file alias="Underline.qml">input/Underline.qml</file>
+
+  <!-- Theme -->
+  <file alias="qmldir">theme/qmldir</file>
+  <file alias="Style.qml">theme/Style.qml</file>
+  <file alias="Style_init.qml">theme/Style_init.qml</file>
+
 </qresource>
 </RCC>

@@ -5,25 +5,17 @@ import QtQuick.Window 2.13
 
 Window {
   id: main_window
-  //flags: Qt.FramelessWindowHint | Qt.X11BypassWindowManagerHint | Qt.WindowTransparentForInput
-  flags: Qt.FramelessWindowHint | Qt.X11BypassWindowManagerHint
+  flags: Qt.FramelessWindowHint | Qt.Tool
   color: "transparent"
 
-  ListView {
-    anchors.fill: parent
+  property var unit_k: 108
 
-    model: _model
-    delegate: Pane {
-      width: parent.width
-      height: 85
-      Label {
-        anchors.fill: parent
-        text: name
-      }
-      MouseArea {
-        anchors.fill: parent
-        onClicked: _model.action(index)
-      }
-    }
+  width: 6 * unit_k
+  height: 8 * unit_k
+
+  Style_init {}
+
+  Chooser {
+    anchors.fill: parent
   }
 }
