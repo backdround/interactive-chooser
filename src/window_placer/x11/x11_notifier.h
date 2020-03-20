@@ -1,6 +1,5 @@
 #pragma once
 #include <QObject>
-#include <QRect>
 
 #include <xcb/randr.h>
 #include <xcb/xcb_ewmh.h>
@@ -9,17 +8,19 @@
 
 #include "x11_event_loop.h"
 
-class X11_notifier : public QObject {
+#include "monitor_geometry.h"
+
+class X11_notifier : public Monitor_geometry {
     Q_OBJECT
 
 public:
     X11_notifier();
     ~X11_notifier();
 
-    QRect current_monitor_geometry();
+    QRect current_monitor_geometry() override;
 
-signals:
-    void current_monitor_changed(const QRect& screen);
+// base signals:
+    // void current_monitor_changed(const QRect& geometry);
 
 private slots:
     void event_handler(const xcb_generic_event_t* event);

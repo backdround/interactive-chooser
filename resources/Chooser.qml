@@ -14,7 +14,7 @@ Rectangle {
 
       Rectangle {
         Layout.fillWidth: true
-        height: unit_k * 0.4
+        implicitHeight: unit_k * 0.4
         color: Style.primary
 
         Input {

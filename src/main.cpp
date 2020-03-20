@@ -5,7 +5,9 @@
 #include <QQmlEngine>
 
 
-#include "window_placer.h"
+#include "x11_notifier.h"
+#include "geometry_updater.h"
+
 #include "model_factory.h"
 #include "main_window.h"
 
@@ -30,7 +32,9 @@ int main(int argc, char* argv[]) {
         exit(-1);
     }
 
-    Window_placer placer(window);
+    X11_notifier x11;
+
+    Geometry_updater updater(*window, x11);
     window->show();
 
     return app.exec();
