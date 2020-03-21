@@ -11,7 +11,6 @@ public:
     std::optional<item_t> item(int id) override;
 
     void action(int id) override;
-    void user_input_changed(std::string input) override;
 
 private:
     std::map<int, item_t> items_;

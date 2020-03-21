@@ -41,7 +41,7 @@ Rectangle {
         }
         Shortcut {
           sequence: "Return"
-          onActivated: print("index: " + list.currentIndex)
+          onActivated: list.action()
         }
       }
     }

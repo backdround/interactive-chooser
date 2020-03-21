@@ -28,7 +28,6 @@ public:
     virtual std::optional<item_t> item(int id) = 0;
 
     virtual void action(int id) = 0;
-    virtual void user_input_changed(std::string input) = 0;
 
     virtual item_declaration_t declaration() { return {}; }
 

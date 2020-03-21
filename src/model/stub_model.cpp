@@ -29,7 +29,3 @@ std::optional<item_t> Stub_model::item(int id) {
 void Stub_model::action(int id) {
     cout << "action index: " << id << endl;
 }
-
-void Stub_model::user_input_changed(std::string input) {
-    cout << "user input: " << input << endl;
-}

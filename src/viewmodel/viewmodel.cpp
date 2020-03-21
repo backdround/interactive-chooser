@@ -27,6 +27,7 @@ int Viewmodel::rowCount(const QModelIndex& parent) const {
 
 QHash<int, QByteArray> Viewmodel::roleNames() const {
     QHash<int, QByteArray> roles;
+    roles[ID] = "id";
     roles[NAME] = "name";
     roles[WEIGHT] = "weight";
 
@@ -45,6 +46,8 @@ QVariant Viewmodel::data(const QModelIndex& model_index, int role) const {
 
     int index = model_index.row();
     switch (role) {
+        case ID:
+            return {items_[index].id};
         case NAME:
             return {items_[index].name};
         case DESCRIPTION:
@@ -98,24 +101,26 @@ void Viewmodel::item_erased(int id) {
 
 //////////////////////////////////////////////////////////////////////
 // Actions
-void Viewmodel::action(QVariant index) {
-    if (!index.canConvert<int>()) {
-        qWarning() << "Couldn't convert action index to std::size_t";
+void Viewmodel::action(QVariant id) {
+    if (!id.canConvert<int>()) {
+        qWarning() << "Couldn't convert action id to int";
         return;
     }
 
-    auto i = index.value<std::size_t>();
-    model_.action(items_[i].id);
+    model_.action(id.value<int>());
 }
 
+#include <iostream>
+using namespace std;
 void Viewmodel::user_input_changed(QVariant input) {
     if (!input.canConvert<QString>()) {
         qWarning() << "Couldn't convert user input to QString";
         return;
     }
 
-    auto input_string = input.toString();
-    model_.user_input_changed(input_string.toStdString());
+    auto input_string = input.toString().toStdString();
+    //model_.user_input_changed(input_string);
+    cout << "input_string: " << input_string << endl;
 }
 
 

@@ -12,6 +12,15 @@ ListView {
 
   property font font
 
+  property int current_id_
+  function action(id) {
+    if (id !== undefined) {
+      _model.action(id)
+    } else if (current_id_ !== undefined) {
+      _model.action(current_id_)
+    }
+  }
+
 
   delegate: Rectangle {
     id: delegate
@@ -53,9 +62,15 @@ ListView {
 
     MouseArea {
       anchors.fill: parent
-      onClicked: _model.action(index)
+      onClicked: root.action(id)
       hoverEnabled: true
       onEntered: delegate.ListView.view.currentIndex = model.index
+    }
+
+    ListView.onIsCurrentItemChanged: {
+      if (ListView.isCurrentItem) {
+        root.current_id_ = model.id
+      }
     }
   }
 
