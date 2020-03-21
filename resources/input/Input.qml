@@ -9,6 +9,8 @@ Rectangle {
   color: "transparent"
   clip: true
 
+  property alias text: input_field.text
+
   Underline {
     activated: input_field.activeFocus
     active_color: Style.primary_alt
