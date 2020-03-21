@@ -14,7 +14,5 @@ Item {
 
     Style.focused_text = "#000"
     Style.unfocused_text = "#3D3857"
-
-    Style.k = Qt.binding(function() { return Screen.height / 10})
   }
 }

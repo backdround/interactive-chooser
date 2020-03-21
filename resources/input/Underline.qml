@@ -6,7 +6,7 @@ Rectangle {
   x: 0
   y: parent.height * 0.833
 
-  height: unit_k * 0.02
+  height: relative_unit * 0.02
   width: target_width
 
   color: Style.unfocused_underline
@@ -21,7 +21,7 @@ Rectangle {
     x: root.target_width * 0.5
     y: 0
 
-    height: unit_k * 0.02
+    height: relative_unit * 0.02
     width: 0
 
     color: root.active_color

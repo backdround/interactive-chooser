@@ -5,16 +5,16 @@ Rectangle {
   color: Style.main_background
   Rectangle {
     anchors.fill: parent
-    anchors.margins: unit_k * 0.12
+    anchors.margins: relative_unit * 0.12
     color: "transparent"
 
     ColumnLayout {
       anchors.fill: parent
-      spacing: unit_k * 0.065
+      spacing: relative_unit * 0.065
 
       Rectangle {
         Layout.fillWidth: true
-        implicitHeight: unit_k * 0.4
+        implicitHeight: relative_unit * 0.4
         color: Style.primary
 
         Input {
@@ -25,7 +25,7 @@ Rectangle {
 
       List {
         id: list
-        font.pointSize: unit_k * 0.125
+        font.pointSize: relative_unit * 0.125
         Layout.fillWidth: true
         Layout.fillHeight: true
 

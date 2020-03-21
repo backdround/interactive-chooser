@@ -4,8 +4,8 @@ import QtQuick.Controls 2.13
 
 Rectangle {
   id: root
-  implicitHeight: unit_k * 0.4
-  implicitWidth: unit_k * 2
+  implicitHeight: relative_unit * 0.4
+  implicitWidth: relative_unit * 2
   color: "transparent"
   clip: true
 
@@ -20,7 +20,7 @@ Rectangle {
     horizontalAlignment: TextInput.AlignHCenter
     verticalAlignment: TextInput.AlignVCenter
 
-    font.pointSize: unit_k * 0.15
+    font.pointSize: relative_unit * 0.15
 
     sub_color: Style.primary_alt
   }

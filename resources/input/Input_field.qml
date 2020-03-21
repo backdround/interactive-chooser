@@ -8,7 +8,7 @@ TextInput {
   property var sub_color: "#444"
 
   cursorDelegate: Rectangle {
-    width: unit_k * 0.0185
+    width: relative_unit * 0.0185
     color: sub_color
 
     Timer {

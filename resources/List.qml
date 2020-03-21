@@ -8,7 +8,7 @@ ListView {
   model: _model
 
   interactive: false
-  spacing: unit_k * 0.065
+  spacing: relative_unit * 0.065
 
   property font font
 
@@ -16,7 +16,7 @@ ListView {
   delegate: Rectangle {
     id: delegate
     width: parent.width
-    height: unit_k * 0.45
+    height: relative_unit * 0.45
 
     color: Style.list_element_background
 
@@ -34,7 +34,7 @@ ListView {
         when: delegate.ListView.isCurrentItem
         PropertyChanges {
           target: delegate
-          height: unit_k * 0.53
+          height: relative_unit * 0.53
         }
       }
     ]

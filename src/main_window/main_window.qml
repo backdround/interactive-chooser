@@ -5,13 +5,12 @@ import QtQuick.Window 2.13
 
 Window {
   id: main_window
-  flags: Qt.FramelessWindowHint | Qt.Tool
+  flags: Qt.FramelessWindowHint | Qt.WindowStaysOnTopHint
+  modality: Qt.WindowModal
   color: "transparent"
 
-  property var unit_k: 108
-
-  width: 6 * unit_k
-  height: 8 * unit_k
+  // Contains one tenth of screen height.
+  property var relative_unit: 108
 
   Style_init {}
 

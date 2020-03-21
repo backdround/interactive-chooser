@@ -1,5 +1,5 @@
 #include <QDebug>
-#include <QMetaObject>
+#include <QTimer>
 
 #include "geometry_updater.h"
 
@@ -11,13 +11,16 @@ Geometry_updater::Geometry_updater(QWindow& window, Monitor_geometry& geometry)
 }
 
 void Geometry_updater::update_window_geometry(const QRect& geometry) {
-    // Set unit_k to qml object.
-    auto unit_k = managed_window_.property("unit_k");
-    if (!unit_k.isNull()) {
+    // Disable focus accept.
+    managed_window_.setFlag(Qt::WindowDoesNotAcceptFocus, true);
+
+    // Set relative_unit to qml object.
+    auto relative_unit = managed_window_.property("relative_unit");
+    if (!relative_unit.isNull()) {
         auto value = QVariant::fromValue(geometry.height() / 10);
-        managed_window_.setProperty("unit_k", value);
+        managed_window_.setProperty("relative_unit", value);
     } else {
-        qWarning() << "Couldn't set unit_k";
+        qWarning() << "Couldn't set relative_unit";
     }
 
 
@@ -31,4 +34,10 @@ void Geometry_updater::update_window_geometry(const QRect& geometry) {
     auto y = geometry.y() + geometry.height() * (0.5 - height_k * 0.5);
 
     managed_window_.setGeometry(x, y, width, height);
+
+    // Enable focus accept.
+    managed_window_.setFlag(Qt::WindowDoesNotAcceptFocus, false);
+    QTimer::singleShot(10, [this] {
+        managed_window_.requestActivate();
+    });
 }

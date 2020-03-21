@@ -14,6 +14,4 @@ QtObject {
 
   property var unfocused_text
   property var focused_text
-
-  property var k
 }
