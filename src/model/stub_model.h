@@ -11,6 +11,7 @@ public:
     std::optional<item_t> item(int id) override;
 
     void action(int id) override;
+    int calculate_weight(int id, const std::string& sort_string) override;
 
 private:
     std::map<int, item_t> items_;

@@ -21,6 +21,10 @@ ListView {
     }
   }
 
+  function reset_current() {
+    currentIndex = 0
+  }
+
 
   delegate: Rectangle {
     id: delegate
@@ -34,7 +38,7 @@ ListView {
       color: delegate.ListView.isCurrentItem ? Style.focused_text : Style.unfocused_text
       font: root.font
 
-      text: name
+      text: name + " (" + weight + ")"
     }
 
     states: [
@@ -47,25 +51,6 @@ ListView {
         }
       }
     ]
-
-    transitions: [
-      Transition {
-        to: "selected"
-        reversible: true
-        PropertyAnimation {
-          duration: 25
-          property: "height"
-          easing.type: Easing.OutInCirc
-        }
-      }
-    ]
-
-    MouseArea {
-      anchors.fill: parent
-      onClicked: root.action(id)
-      hoverEnabled: true
-      onEntered: delegate.ListView.view.currentIndex = model.index
-    }
 
     ListView.onIsCurrentItemChanged: {
       if (ListView.isCurrentItem) {

@@ -4,6 +4,7 @@
 #include <QAbstractListModel>
 
 #include <vector>
+#include <map>
 
 #include "model_interface.h"
 
@@ -31,14 +32,19 @@ private slots:
     void item_erased(int id);
 
 private:
-    std::optional<std::size_t> find(int id);
+    void resort();
+    std::string last_input;
 
     struct item_t {
         int id;
+        int weight;
         QString name;
         QVariant description;
+        bool operator<(const item_t& lo) const { return weight < lo.weight; }
     };
-    std::vector<item_t> items_;
+    std::map<int, item_t> items_;
+
+    std::vector<item_t> sorted_items_;
 
     Model_interface& model_;
 };

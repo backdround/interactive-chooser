@@ -28,6 +28,7 @@ public:
     virtual std::optional<item_t> item(int id) = 0;
 
     virtual void action(int id) = 0;
+    virtual int calculate_weight(int id, const std::string& sort_string) = 0;
 
     virtual item_declaration_t declaration() { return {}; }
 

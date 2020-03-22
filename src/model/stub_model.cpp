@@ -1,3 +1,7 @@
+#include <QDebug>
+
+#include <cstring>
+
 #include "stub_model.h"
 
 #include <iostream>
@@ -28,4 +32,25 @@ std::optional<item_t> Stub_model::item(int id) {
 
 void Stub_model::action(int id) {
     cout << "action index: " << id << endl;
+}
+
+int Stub_model::calculate_weight(int id, const std::string& sort_string) {
+    auto iterator = items_.find(id);
+    if (iterator == items_.end()) {
+        qWarning() << "Couldn't find id for weight calculation";
+        return -1;
+    }
+
+    const auto& item = iterator->second;
+    const char* substring = std::strstr(item.name.c_str(), sort_string.c_str());
+
+    if (!substring) {
+        return -1;
+    }
+
+    int position = substring - item.name.c_str();
+
+    int weight = 10000;
+    weight -= position;
+    return weight;
 }

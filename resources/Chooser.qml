@@ -20,7 +20,10 @@ Rectangle {
         Input {
           anchors.centerIn: parent
           focus: true
-          onTextChanged: _model.user_input_changed(text)
+          onTextChanged: {
+            _model.user_input_changed(text)
+            list.reset_current()
+          }
         }
       }
 
