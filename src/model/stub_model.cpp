@@ -2,6 +2,8 @@
 
 #include <cstring>
 
+#include "fuzzywuzzy.hpp"
+
 #include "stub_model.h"
 
 #include <iostream>
@@ -42,15 +44,17 @@ int Stub_model::calculate_weight(int id, const std::string& sort_string) {
     }
 
     const auto& item = iterator->second;
-    const char* substring = std::strstr(item.name.c_str(), sort_string.c_str());
+    //const char* substring = std::strstr(item.name.c_str(), sort_string.c_str());
 
-    if (!substring) {
-        return -1;
-    }
+    //if (!substring) {
+        //return -1;
+    //}
 
-    int position = substring - item.name.c_str();
+    //int position = substring - item.name.c_str();
 
-    int weight = 10000;
-    weight -= position;
-    return weight;
+    //int weight = 10000;
+    //weight -= position;
+    //return weight;
+    //return fuzz::partial_token_set_ratio(item.name, sort_string);
+    return fuzz::ratio(item.name, sort_string);
 }
