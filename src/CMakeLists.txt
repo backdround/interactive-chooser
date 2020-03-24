@@ -25,7 +25,7 @@ find_package(Threads REQUIRED)
 add_library(main_lib STATIC ${SOURCES} ${HEADERS})
 target_include_directories(main_lib PUBLIC ${DIRECTORIES})
 target_link_libraries(main_lib Qt5::Core Qt5::Quick XCB::XCB XCB::RANDR
-  XCB::EWMH Threads::Threads fuzzywuzzy)
+  XCB::EWMH Threads::Threads fuzzywuzzy cxxopts)
 
 
 # Create binary

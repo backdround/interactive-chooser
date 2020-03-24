@@ -4,6 +4,8 @@
 
 #include <QQmlEngine>
 
+#include <memory>
+
 
 #include "x11_notifier.h"
 #include "geometry_updater.h"
@@ -15,10 +17,14 @@ int main(int argc, char* argv[]) {
     QGuiApplication app(argc, argv);
 
     Model_factory factory(argc, argv);
-    auto model = factory.create();
+    std::unique_ptr<Model_interface> model(factory.create());
 
     if (!model) {
-        qCritical() << "Couldn't create model";
+        if (auto error = factory.error_string()) {
+            qCritical() << QString(error.value().c_str());
+        } else {
+            qCritical() << "Couldn't create model";
+        }
         exit(-1);
     }
 

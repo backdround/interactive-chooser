@@ -24,6 +24,8 @@ class Model_interface : public QObject {
     Q_OBJECT
 
 public:
+    virtual ~Model_interface() = default;
+
     virtual std::list<item_t> items() = 0;
     virtual std::optional<item_t> item(int id) = 0;
 
