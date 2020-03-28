@@ -3,6 +3,7 @@
 #include <cxxopts.hpp>
 
 #include "stub_model.h"
+#include "application_model.h"
 
 #include "model_factory.h"
 
@@ -37,11 +38,10 @@ Model_interface* Model_factory::create() {
 
     switch (mode_) {
         case APPLICATION:
-            return new Stub_model;
+            return new Application_model;
         case STUB:
         default:
             return new Stub_model;
-
     }
 }
 
