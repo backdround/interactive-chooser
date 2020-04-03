@@ -1,5 +1,6 @@
 #pragma once
 #include <map>
+#include <filesystem>
 
 #include "model_interface.h"
 
@@ -16,5 +17,9 @@ public:
     int calculate_weight(int id, const std::string& sort_string) override;
 
 private:
-    std::map<int, item_t> items_;
+    struct extended_item_t : public item_t {
+        std::filesystem::path path;
+    };
+
+    std::map<int, extended_item_t> items_;
 };

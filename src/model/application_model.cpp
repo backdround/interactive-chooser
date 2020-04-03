@@ -1,6 +1,8 @@
 #include <QDebug>
+#include <QString>
 
 #include <list>
+#include <cstdlib>
 #include <filesystem>
 
 #include <libxdgbasedir/libxdgbasedir.h>
@@ -34,8 +36,11 @@ Application_model::Application_model() {
     // Create model.
     int id = 0;
     for (const auto& path : application_paths) {
-        auto name = path.filename().string();
-        item_t item{.id = id++, .name = name, .description = {}};
+        auto name = path.filename().replace_extension().string();
+        extended_item_t item;
+        item.id = id++;
+        item.name = name;
+        item.path = path;
         items_[item.id] = item;
     }
 }
@@ -56,6 +61,14 @@ std::optional<item_t> Application_model::item(int id) {
 }
 
 void Application_model::action(int id) {
+    auto item_iterator = items_.find(id);
+    if (item_iterator == items_.end()) {
+        qWarning() << "Couldn't find item with action id";
+        return;
+    }
+    auto& item = item_iterator->second;
+    auto command = "gtk-launch \"" + item.path.filename().string() + "\"";
+    std::system(command.c_str());
 }
 
 int Application_model::calculate_weight(int id, const std::string& sort_string) {
@@ -66,5 +79,5 @@ int Application_model::calculate_weight(int id, const std::string& sort_string) 
     }
 
     const auto& item = iterator->second;
-    return fuzz::ratio(item.name, sort_string);
+    return fuzz::weighted_ratio(item.name, sort_string);
 }
