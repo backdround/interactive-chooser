@@ -1,0 +1,9 @@
+[submodule "fuzzywuzzy"]
+	path = fuzzywuzzy
+	url = git@github.com:backdround/fuzzywuzzy.git
+[submodule "cxxopts"]
+	path = cxxopts
+	url = git@github.com:jarro2783/cxxopts.git
+[submodule "libxdgbasedir"]
+	path = libxdgbasedir
+	url = git@github.com:emcrisostomo/libxdgbasedir.git

@@ -12,6 +12,19 @@ ListView {
 
   property font font
 
+  property int current_id_
+  function action(id) {
+    if (id !== undefined) {
+      _model.action(id)
+    } else if (current_id_ !== undefined) {
+      _model.action(current_id_)
+    }
+  }
+
+  function reset_current() {
+    currentIndex = 0
+  }
+
 
   delegate: Rectangle {
     id: delegate
@@ -25,7 +38,7 @@ ListView {
       color: delegate.ListView.isCurrentItem ? Style.focused_text : Style.unfocused_text
       font: root.font
 
-      text: name
+      text: name + " (" + weight + ")"
     }
 
     states: [
@@ -39,23 +52,10 @@ ListView {
       }
     ]
 
-    transitions: [
-      Transition {
-        to: "selected"
-        reversible: true
-        PropertyAnimation {
-          duration: 25
-          property: "height"
-          easing.type: Easing.OutInCirc
-        }
+    ListView.onIsCurrentItemChanged: {
+      if (ListView.isCurrentItem) {
+        root.current_id_ = model.id
       }
-    ]
-
-    MouseArea {
-      anchors.fill: parent
-      onClicked: _model.action(index)
-      hoverEnabled: true
-      onEntered: delegate.ListView.view.currentIndex = model.index
     }
   }
 

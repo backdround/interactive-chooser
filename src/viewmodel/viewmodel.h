@@ -4,6 +4,7 @@
 #include <QAbstractListModel>
 
 #include <vector>
+#include <map>
 
 #include "model_interface.h"
 
@@ -17,24 +18,33 @@ public:
     QVariant data(const QModelIndex& index, int role) const override;
 
     enum ROLES {
-        NAME = Qt::UserRole + 1,
+        ID = Qt::UserRole + 1,
+        NAME,
         WEIGHT,
         DESCRIPTION,
     };
 
-    Q_INVOKABLE void action(QVariant index);
+    Q_INVOKABLE void action(QVariant id);
+    Q_INVOKABLE void user_input_changed(QVariant input);
 
 private slots:
-    void item_inserted(std::size_t index);
-    void item_erased(std::size_t index);
+    void item_inserted(int id);
+    void item_erased(int id);
 
 private:
+    void resort();
+    std::string last_input;
+
     struct item_t {
-        QString name;
+        int id;
         int weight;
-        QString description;
+        QString name;
+        QVariant description;
+        bool operator<(const item_t& lo) const { return weight < lo.weight; }
     };
-    std::vector<item_t> items_;
+    std::map<int, item_t> items_;
+
+    std::vector<item_t> sorted_items_;
 
     Model_interface& model_;
 };

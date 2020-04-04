@@ -17,3 +17,6 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/")
 
 
 add_subdirectory(src)
+add_subdirectory(fuzzywuzzy)
+add_subdirectory(cxxopts)
+add_subdirectory(libxdgbasedir)
